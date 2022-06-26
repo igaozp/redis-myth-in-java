@@ -18,11 +18,19 @@ public class RedisListQueueService {
 
     private static final String LIST_QUEUE_KEY = "list-queue";
 
-    public void enqueue(Object obj) {
+    public void leftEnqueue(Object obj) {
         redisTemplate.opsForList().leftPush(LIST_QUEUE_KEY, obj);
     }
 
-    public Object dequeue() {
+    public Object rightDequeue() {
         return redisTemplate.opsForList().rightPop(LIST_QUEUE_KEY);
+    }
+
+    public void rightEnqueue(Object obj) {
+        redisTemplate.opsForList().rightPush(LIST_QUEUE_KEY, obj);
+    }
+
+    public Object leftDequeue() {
+        return redisTemplate.opsForList().leftPop(LIST_QUEUE_KEY);
     }
 }

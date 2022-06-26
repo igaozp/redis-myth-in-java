@@ -1,6 +1,7 @@
 package xyz.andornot.redismyth.queue;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,9 +13,18 @@ class RedisListQueueTests {
     private RedisListQueueService redisListQueueService;
 
     @Test
-    void enqueueAndDequeue() {
+    @DisplayName("左进右出")
+    void enqueueAndDequeueTest() {
         var value = 1;
-        redisListQueueService.enqueue(value);
-        Assertions.assertEquals(redisListQueueService.dequeue(), value);
+        redisListQueueService.leftEnqueue(value);
+        Assertions.assertEquals(redisListQueueService.rightDequeue(), value);
+    }
+
+    @Test
+    @DisplayName("右进左出")
+    void anotherEnqueueAndDequeueTest() {
+        var value = 2;
+        redisListQueueService.rightEnqueue(value);
+        Assertions.assertEquals(redisListQueueService.leftDequeue(), value);
     }
 }
